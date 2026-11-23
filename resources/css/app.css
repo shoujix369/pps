@@ -1,3 +1,43 @@
+/* resources/css/app.css */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'LINESeedJP';
+    src: url('/fonts/LINESeedJP_OTF_Rg.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'LINESeedJP';
+    src: url('/fonts/LINESeedJP_OTF_Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@layer base {
+    html, body {
+        font-family: 'LINESeedJP', -apple-system, BlinkMacSystemFont, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.font-judul {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-teks {
+    font-family: 'LINESeedJP', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.teks-vertikal {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
