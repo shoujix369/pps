@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\dashboardController as AdminDashboard;
+use App\Http\Controllers\Siswa\dashboardController as SiswaDashboard;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,15 +20,18 @@ Route::middleware('auth')->group(function() {
         return redirect()->route('siswa.dashboard');
     })->name('dashboard');
 
-    Route::get('/admin/dashboard', function() {
-        return view('admin.dashboard');
-    })->middleware(['auth'])->name('admin.dashboard');
 
-    Route::get('/siswa/dashboard', function() {
-        return view('siswa.dashboard');
-    })->middleware(['auth'])->name('siswa.dashboard');
+
+
+Route::middleware(['auth', 'role:admin,petugas'])->group(function() {
+    Route::get('/admin/dashboard', [AdminDashboard::class, 'index'])->middleware(['auth'])->name('admin.dashboard');
 });
 
+Route::middleware(['auth', 'role:siswa'])->group(function() {
+    Route::get('/siswa/dashboard', [SiswaDashboard::class, 'index'])->middleware(['auth'])->name('siswa.dashboard');
+});
+
+});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
