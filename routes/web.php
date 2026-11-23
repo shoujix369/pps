@@ -7,9 +7,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function() {
+
+    Route::get('/dashboard', function () {
+        if (in_array(auth()->user()->role, ['admin', 'petugas'])) {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('siswa.dashboard');
+    })->name('dashboard');
+
+    Route::get('/admin/dashboard', function() {
+        return view('admin.dashboard');
+    })->middleware(['auth'])->name('admin.dashboard');
+
+    Route::get('/siswa/dashboard', function() {
+        return view('siswa.dashboard');
+    })->middleware(['auth'])->name('siswa.dashboard');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
